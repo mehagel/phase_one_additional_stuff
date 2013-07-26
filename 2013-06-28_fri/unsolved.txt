@@ -1,0 +1,6 @@
+def get_column(str)
+  div_by = Math.sqrt(str.length)
+  while (div_by > 0)
+
+  end
+end

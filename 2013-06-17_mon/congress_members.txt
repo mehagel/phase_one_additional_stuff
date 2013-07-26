@@ -1,0 +1,32 @@
+.schemacongress_members 
+  id 
+  name
+  party
+  location
+  grade_1996 
+  grade_current , 
+  years_in_congress 
+  dw1_score 
+
+ voters 
+    id ,
+    first_name 
+    last_name  
+    gender 
+    party 
+    party_duration 
+    age 
+    married 
+    children_count 
+    homeowner  
+    employed  
+
+
+ votes 
+    id 
+    voter_id 
+    politician_id ,
+    created_at 
+    updated_at 
+    (voter_id)  voters(id),
+    politician_id)     congress_members(id)

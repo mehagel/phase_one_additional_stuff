@@ -1,0 +1,80 @@
+
+  require 'sqlite3'
+
+$db = SQLite3::Database.new "students.db"
+
+
+p 'lalalalalala'
+
+require 'sqlite3'
+
+$db = SQLite3::Database.new "students.db"
+
+module StudentDB
+  def self.setup
+    $db.execute(
+      <<-SQL
+        CREATE TABLE students (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          first_name VARCHAR(64) NOT NULL,
+          last_name VARCHAR(64) NOT NULL,
+          created_at DATETIME NOT NULL,
+          updated_at DATETIME NOT NULL
+        );
+      SQL
+    )
+  end
+
+  def self.seed
+    $db.execute(
+      <<-SQL
+        INSERT INTO students 
+          (first_name, last_name, created_at, updated_at)
+        VALUES
+          ('Brick','Thornton',DATETIME('now'), DATETIME('now'));
+      SQL
+    )
+  end
+end
+
+-----
+
+require_relative('setup.rb')
+require 'date'
+
+class Student
+
+  def initialize(attributes = {})
+    @id         = attributes[:id]
+    @first_name = attributes[:first_name]
+    @last_name  = attributes[:last_name]
+    @email      = attributes[:email]
+    @phone      = attributes[:phone]
+    @created_at = attributes[:created_at]
+    @updated_at = attributes[:updated_at]
+  end
+
+  def delete_student
+  end
+
+  def self.all
+    students = []
+    $db.execute(
+      <<-SQL
+      SELECT * FROM students;
+      SQL
+      ).each do |student|
+      students << student
+    end
+    students
+  end
+
+  
+  def self.where
+  end
+
+  def save
+  end
+end
+
+Student.all

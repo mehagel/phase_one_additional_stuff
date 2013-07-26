@@ -1,0 +1,5 @@
+def dict_sort(array)
+p "Congatulations your dictonary has #{array.length} words"
+end
+
+until 

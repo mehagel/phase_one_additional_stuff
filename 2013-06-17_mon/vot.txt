@@ -1,0 +1,228 @@
+SELECT COUNT(*) FROM votes
+WHERE politician_id = 524;
+SELECT COUNT(*) FROM votes
+JOIN congress_members
+;
+SELECT COUNT(votes.id) from votes
+JOIN congress_members ON
+congress_members.id = votes.politician_id
+WHERE congress_members.name LIKE '%snowe'
+GROUP BY congress_members.name;
+SELECT COUNT(votes.id) from votes
+JOIN congress_members ON
+congress_members.id = votes.politician_id
+WHERE congress_members.name LIKE '%paulsen'
+GROUP BY congress_members.name;
+SELECT congress_members.id, congress_members.name, congress_members.party, congress_members.location, congress_members.grade_1996, congress_members.grade_current, congress_members.years_in_congress, congress_members.dw1_score, COUNT(votes.id) from votes
+JOIN congress_members ON
+congress_members.id = votes.politician_id
+;
+SELECT congress_members.id, congress_members.name, congress_members.party, congress_members.location, congress_members.grade_1996, congress_members.grade_current, congress_members.years_in_congress, congress_members.dw1_score, COUNT(votes.id) from votes
+JOIN congress_members ON
+congress_members.id = votes.politician_id
+GROUP BY congress_members.name
+ORDER BY COUNT(votes.id);
+SELECT congress_members.id, congress_members.name, congress_members.party, congress_members.location, congress_members.grade_1996, congress_members.grade_current, congress_members.years_in_congress, congress_members.dw1_score, COUNT(votes.id) from votes
+JOIN congress_members ON
+congress_members.id = votes.politician_id
+GROUP BY congress_members.name
+ORDER BY COUNT(votes.id) DESC;
+SELECT congress_members.id, congress_members.name, congress_members.party, congress_members.location, congress_members.grade_1996, congress_members.grade_current, congress_members.years_in_congress, congress_members.dw1_score, COUNT(votes.id) from votes
+JOIN congress_members ON
+congress_members.id = votes.politician_id
+GROUP BY congress_members.name
+ORDER BY COUNT(votes.id)
+SELECT congress_members.id FROM congress_members
+JOIN votes
+ON votes.politician_id = congress_members.id
+GROUP BY congress_members.id
+ORDER BY COUNT(*) DESC
+LIMIT 10;
+SELECT first_name, last_name, gender, party, COUNT(*) AS vote_count
+FROM voters
+JOIN votes ON votes.voter_id = voters.id
+WHERE votes.politician_id IN (
+SELECT congress_members.id
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+GROUP by congress_members.id
+ORDER BY COUNT(*) DESC
+LIMIT 10)
+GROUP BY voters.id
+ORDER BY vote_count DESC;
+SELECT *
+FROM congress_members
+LIMIT 1
+;
+SELECT * 
+FROM congress_members
+LIMIT 5;
+SELECT *
+FROM congress_members
+WHERE years_in_congress > 2
+LIMIT 5;
+SELECT name, location, grade_1996, COUNT(votes.politician_id)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY votes.id;
+SELECT name, location, grade_1996, COUNT(votes.id)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY votes.id;
+SELECT name, location, grade_1996, COUNT(*) politician_id
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name;
+SELECT name, location, grade_1996, COUNT(*) votes
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name;
+SELECT name, location, grade_1996, COUNT(*)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name;
+SELECT name, location, grade_1996, COUNT(votes.id)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name;
+SELECT name, location, grade_1996, COUNT(*)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY congress_members.id;
+SELECT name, location, grade_1996, COUNT(*)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name
+ORDER BY COUNT(*)
+;
+SELECT name, location, grade_1996, COUNT(*)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name
+ORDER BY COUNT(*) DESC;
+SELECT name, location, grade_1996, COUNT(*) vote_count
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name
+ORDER BY COUNT(*) DESC;
+SELECT name, location, grade_1996, COUNT(*) vote_count
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY name
+ORDER BY vote_count DESC;
+SELECT *
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+;
+SELECT congress_members.name, votes.id
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 ;
+SELECT congress_members.name politician_name, votes.id vote_id
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+ORDER BY politician_name
+LIMIT 50;
+SELECT congress_members.name politician_name, votes.id vote_id
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY politician_name
+ORDER BY politician_name
+LIMIT 50;
+SELECT congress_members.name politician_name, COUNT(votes.id)
+FROM congress_members
+JOIN votes ON votes.politician_id = congress_members.id
+WHERE grade_current < 9 
+GROUP BY politician_name
+ORDER BY politician_name
+LIMIT 50;
+SELECT location, COUNT(*) votes_by_state
+FROM congress_members
+GROUP BY location
+ORDER BY votes_by_state DESC
+LIMIT 10;
+SELECT congress_members.location, COUNT(votes.id) votes_by_state
+FROM congress_members, votes
+WHERE votes.politician_id = congress_members.id
+GROUP BY location
+ORDER BY votes_by_state DESC
+LIMIT 10;
+SELECT voters.first_name, voters.last_name, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id
+GROUP BY votes.voter_id
+ORDER BY times_voted;
+SELECT voters.first_name, voters.last_name, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id
+GROUP BY votes.voter_id
+ORDER BY times_voted DESC;
+SELECT voters.first_name, voters.last_name, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id
+GROUP BY votes.voter_id
+ORDER BY times_voted DESC;
+SELECT voters.first_name, voters.last_name, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id 
+GROUP BY votes.voter_id
+HAVING times_voted > 2
+ORDER BY times_voted DESC;
+SELECT voters.first_name, voters.last_name,COUNT(votes.id) times_voted
+FROM voters
+INNER JOIN votes WHERE votes.voter_id = voters.id
+GROUP BY votes.politician_id
+HAVING times_voted > 2;
+SELECT voters.first_name, voters.last_name,COUNT(votes.id) times_voted
+FROM voters
+INNER JOIN votes WHERE votes.voter_id = voters.id
+GROUP BY votes.voter_id
+HAVING times_voted > 2;
+SELECT voters.first_name, voters.last_name,COUNT(votes.id) times_voted
+FROM voters
+INNER JOIN votes WHERE votes.voter_id = voters.id
+GROUP BY votes.voter_id
+HAVING times_voted > 2;
+SELECT voters.first_name, voters.last_name, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id 
+GROUP BY votes.politician_id
+HAVING times_voted > 2
+ORDER BY times_voted DESC;
+SELECT voters.first_name, voters.last_name, votes.politician_id, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id 
+GROUP BY votes.politician_id
+HAVING times_voted > 2
+ORDER BY times_voted DESC;
+SELECT voters.first_name, voters.last_name, votes.politician_id, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id 
+ORDER BY times_voted DESC;
+SELECT voters.first_name, voters.last_name, votes.politician_id, COUNT(votes.id) times_voted
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id 
+GROUP BY votes.politician_id
+HAVING times_voted > 2
+ORDER BY times_voted DESC;
+SELECT voters.first_name, voters.last_name, votes.politician_id, COUNT(votes.id) times_voted, COUNT(politician_id) politician
+FROM voters, votes 
+WHERE votes.voter_id  =  voters.id 
+GROUP BY votes.politician_id
+HAVING times_voted > 2
+ORDER BY times_voted DESC;
+SELECT voters.fi
